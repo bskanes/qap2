@@ -1,6 +1,25 @@
 const http = require('http');
 const fs = require('fs');
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 
+eventEmitter.on('home', () => {
+    console.log('*homepage visited*');
+  });
+eventEmitter.on('about', () => {
+    console.log('*about page visited*');
+  });
+eventEmitter.on('contact', () => {
+    console.log('*contact page visited*');
+  });
+eventEmitter.on('products', () => {
+    console.log('*products page visited*');
+  });
+eventEmitter.on('subscribe', () => {
+    console.log('*subscribe page visited*');
+  });
+  
+eventEmitter.emit('start');
 
 const server = http.createServer((request, response) => {
     let path = './views/';
@@ -17,6 +36,7 @@ const server = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 }
+                eventEmitter.emit('home');
             });
             break;
         case '/about':
@@ -31,6 +51,7 @@ const server = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 }
+                eventEmitter.emit('about');
             });
             break;
         case '/contact':
@@ -45,6 +66,7 @@ const server = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 }
+                eventEmitter.emit('contact');
             });
             break;
         case '/products':
@@ -59,6 +81,7 @@ const server = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 }
+                eventEmitter.emit('products');
             });
             break;
         case '/subscribe':
@@ -73,6 +96,7 @@ const server = http.createServer((request, response) => {
                     response.write(data);
                     response.end();
                 }
+                eventEmitter.emit('subscribe/');
             });
             break;
     }
